@@ -1,0 +1,40 @@
+{
+    "MAE": 0.533200130495656,
+    "MSE": 0.555891598695244,
+    "RMSE": 0.7455813830127761,
+    "R2_Test": 0.5757877060324511,
+    "R2_Train": 0.6125511913966952,
+    "Sample_Size_Train": 16512,
+    "Sample_Size_Test": 4128,
+    "Features": [
+        "MedInc",
+        "HouseAge",
+        "AveRooms",
+        "AveBedrms",
+        "Population",
+        "AveOccup",
+        "Latitude",
+        "Longitude"
+    ],
+    "Raw_Coefficients": {
+        "MedInc": 0.4486749096657177,
+        "HouseAge": 0.009724257517904874,
+        "AveRooms": -0.1233233428279594,
+        "AveBedrms": 0.7831449067929728,
+        "Population": -2.0296205801399736e-06,
+        "AveOccup": -0.0035263184871342584,
+        "Latitude": -0.4197924865883591,
+        "Longitude": -0.4337080649639869
+    },
+    "Raw_Intercept": -37.023277706064064,
+    "Std_Coefficients": {
+        "MedInc": 0.8543830309268553,
+        "HouseAge": 0.12254623807840759,
+        "AveRooms": -0.2944101344733009,
+        "AveBedrms": 0.3392594905944855,
+        "Population": -0.0023077231458301078,
+        "AveOccup": -0.04082910308508731,
+        "Latitude": -0.8969288766386642,
+        "Longitude": -0.8698417752417174
+    }
+}
