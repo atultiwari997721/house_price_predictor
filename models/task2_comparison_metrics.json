@@ -1,0 +1,67 @@
+{
+    "models": {
+        "Linear Regression": {
+            "Test_RMSE": 0.7455813830127764,
+            "Test_RMSE_USD": 74558.13830127765,
+            "Test_R2": 0.5757877060324508,
+            "Test_MAE": 0.5332001304956565,
+            "Test_MAE_USD": 53320.01304956565,
+            "Train_RMSE": 0.7196757085831575,
+            "Train_R2": 0.6125511913966952,
+            "Overfitting_R2_Gap": 0.03676348536424445
+        },
+        "Ridge Regression": {
+            "Test_RMSE": 0.7455542909384607,
+            "Test_RMSE_USD": 74555.42909384608,
+            "Test_R2": 0.5758185345441325,
+            "Test_MAE": 0.5331933646313115,
+            "Test_MAE_USD": 53319.33646313115,
+            "Train_RMSE": 0.7196757748980629,
+            "Train_R2": 0.612551119993334,
+            "Overfitting_R2_Gap": 0.03673258544920155
+        },
+        "Decision Tree": {
+            "Test_RMSE": 0.7242338143386247,
+            "Test_RMSE_USD": 72423.38143386247,
+            "Test_R2": 0.5997321244428706,
+            "Test_MAE": 0.5222592972077786,
+            "Test_MAE_USD": 52225.929720777865,
+            "Train_RMSE": 0.6959477541460324,
+            "Train_R2": 0.6376786573648903,
+            "Overfitting_R2_Gap": 0.03794653292201966
+        },
+        "Random Forest (Benchmark)": {
+            "Test_RMSE": 0.5445002707005545,
+            "Test_RMSE_USD": 54450.027070055454,
+            "Test_R2": 0.7737496081635717,
+            "Test_MAE": 0.36633533967420157,
+            "Test_MAE_USD": 36633.53396742015,
+            "Train_RMSE": 0.41379414270431203,
+            "Train_R2": 0.8719117419581578,
+            "Overfitting_R2_Gap": 0.09816213379458605
+        }
+    },
+    "best_core_model": "Decision Tree",
+    "feature_names": [
+        "MedInc",
+        "HouseAge",
+        "AveRooms",
+        "AveBedrms",
+        "Population",
+        "AveOccup",
+        "Latitude",
+        "Longitude"
+    ],
+    "feature_importances": {
+        "Decision Tree": {
+            "AveBedrms": 0.0008685076668100586,
+            "Longitude": 0.0020969502013736836,
+            "Population": 0.0024849982871831184,
+            "Latitude": 0.022049480286781685,
+            "AveRooms": 0.031260721268004055,
+            "HouseAge": 0.04162087993608407,
+            "AveOccup": 0.1284067461489081,
+            "MedInc": 0.7712117162048552
+        }
+    }
+}

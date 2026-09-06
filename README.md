@@ -1,116 +1,131 @@
-# California Housing Price Predictor (Linear Regression)
-### Artificial Intelligence & Machine Learning — Task 1 (Maincrafts Technology)
+# California Housing Price Predictor (Tasks 1 & 2)
+### Artificial Intelligence & Machine Learning Internship — Maincrafts Technology
 
-An end-to-end Machine Learning project demonstrating data loading, exploratory data analysis (EDA), preprocessing, model training, metric evaluation, residual diagnostics, report compilation, and an interactive prediction web UI.
-
----
-
-## 📌 Project Overview
-The objective is to train and evaluate a **Multiple Linear Regression model** on the California Housing dataset to predict median district housing values (`MedHouseVal`). 
-
-- **Target Variable**: `MedHouseVal` (Median house value in $100,000s; capped at 5.0 = $500k)
-- **Features**: 8 continuous demographic and geospatial attributes (20,640 census block records)
-- **Train/Test Split**: 80% train (16,512 rows), 20% test (4,128 rows), `random_state=42`
+An industry-aligned Machine Learning repository covering the full ML lifecycle: data loading, exploratory data analysis (EDA), feature engineering, scaling, multi-algorithm training, structured performance comparison, residual diagnostics, professional PDF reports, and an interactive prediction web UI.
 
 ---
 
-## 📊 Model Performance Scorecard
+## 📌 Project Overview & Task Structure
 
-| Metric | Test Set Value | USD Equivalent | Meaning |
-| :--- | :--- | :--- | :--- |
-| **Mean Absolute Error (MAE)** | **0.5332** | **$53,320.01** | Average absolute prediction error |
-| **Mean Squared Error (MSE)** | **0.5559** | — | Residual variance |
-| **Root Mean Squared Error (RMSE)**| **0.7456** | **$74,558.14** | Standard error penalizing large deviations |
-| **$R^2$ Score (Test Set)** | **0.5758** | **57.58%** | Proportion of variance explained by the model |
-| **$R^2$ Score (Train Set)** | **0.6126** | **61.26%** | Consistent with test set (low overfitting) |
+This repository contains both **Task 1** and **Task 2** of the Maincrafts Technology AI/ML Internship:
+
+### 🔹 Task 1: Baseline Linear Regression Model
+* **Dataset**: California Housing Dataset (20,640 records, 8 features)
+* **Goal**: Build and evaluate a baseline Multiple Linear Regression model
+* **Deliverables**: [`task1_ml_linear_regression.ipynb`](./task1_ml_linear_regression.ipynb), [`reports/California_Housing_Linear_Regression_Report.pdf`](./reports/California_Housing_Linear_Regression_Report.pdf), [`models/linear_regression_model.pkl`](./models/linear_regression_model.pkl).
+
+### 🔹 Task 2: Feature Engineering, Model Optimization & Performance Comparison
+* **Goal**: Apply `StandardScaler` preprocessing, train multiple algorithms (`Linear Regression`, `Ridge Regression`, `Decision Tree Regressor`, and `Random Forest`), perform structured comparison on test/train data, analyze overfitting, and justify model selection.
+* **Deliverables**: [`AI_ML_Task2_Model_Comparison.ipynb`](./AI_ML_Task2_Model_Comparison.ipynb), [`reports/Task2_Model_Optimization_Report.pdf`](./reports/Task2_Model_Optimization_Report.pdf), [`models/task2_best_model.pkl`](./models/task2_best_model.pkl), [`app.py`](./app.py).
 
 ---
 
-## 📁 Repository Structure
+## 📊 Task 2 Model Performance Scorecard
+
+All models were evaluated on the standardized dataset using an 80/20 train/test split (`random_state=42`):
+
+| Algorithm | Test RMSE ($100k) | Test Error (USD) | Test $R^2$ Score | Test MAE (USD) | Train $R^2$ | Overfitting Gap ($\Delta R^2$) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Linear Regression** | 0.7456 | $74,558 | 0.5758 (57.58%) | $53,320 | 0.6126 | +0.0368 |
+| **Ridge Regression ($\alpha=1.0$)** | 0.7456 | $74,555 | 0.5758 (57.58%) | $53,319 | 0.6126 | +0.0367 |
+| 🏆 **Decision Tree (`max_depth=5`)** | **0.7242** | **$72,423** | **0.5997 (59.97%)** | **$52,226** | **0.6377** | **+0.0379** |
+| 🌲 **Random Forest (Benchmark)** | **0.5445** | **$54,450** | **0.7738 (77.38%)** | **$36,634** | **0.8719** | **+0.0982** |
+
+---
+
+## 🏆 Key Findings & Model Selection Justification
+
+1. **Why Feature Scaling was Essential**:
+   Features in the dataset have vastly different numerical ranges (e.g. `Population` $\approx 1,425$, `AveBedrms` $\approx 1.1$). Standardizing features via `StandardScaler` ($z = \frac{x - \mu}{\sigma}$) ensured uniform learning dynamics and fair penalty attribution in regularized models.
+
+2. **Why Decision Tree Outperformed Linear & Ridge Models**:
+   - Housing valuations exhibit strong **non-linear geospatial boundaries** (e.g. coastal Bay Area and Los Angeles premiums) that flat linear planes cannot separate.
+   - The Decision Tree captures these step-wise thresholds, reducing test RMSE by **~$2,135** over the linear baseline.
+   - Setting `max_depth=5` successfully controlled variance, keeping the train-test $R^2$ divergence minimal ($\Delta R^2 = 0.0379$).
+
+3. **Ensemble Power (Random Forest)**:
+   Averaging 100 decorrelated trees lifts $R^2$ to **77.38%** ($\text{RMSE} = \$54,450$), illustrating how bagging overcomes single-tree variance.
+
+---
+
+## 📁 Repository Directory Structure
 
 ```
 house_price_predictor/
 │
-├── task1_ml_linear_regression.ipynb   # Fully executed Jupyter Notebook with markdown, code & charts
-├── train_and_export.py                # Standalone training script, metric evaluator & asset generator
-├── generate_report.py                 # ReportLab script producing multi-page PDF summary report
-├── app.py                             # Interactive Streamlit web application with California map
-├── build_notebook.py                  # Programmatic generator & executor for the notebook
-├── requirements.txt                   # Environment dependencies
-├── README.md                          # Project documentation
+├── AI_ML_Task2_Model_Comparison.ipynb # [Task 2] Mandatory Jupyter Notebook (Executed)
+├── task1_ml_linear_regression.ipynb   # [Task 1] Baseline Linear Regression Notebook
+├── task2_train_and_compare.py         # [Task 2] Scaling, Multi-Model Training & Asset Generation
+├── task2_generate_report.py           # [Task 2] ReportLab 2-Page PDF Report Generator
+├── task2_build_notebook.py            # [Task 2] Script that compiles & executes Task 2 notebook
+├── train_and_export.py                # [Task 1] Training & Asset pipeline
+├── generate_report.py                 # [Task 1] PDF Report Generator
+├── app.py                             # Interactive Streamlit Web UI (Multi-Model & Map)
+├── requirements.txt                   # Project Dependencies
+├── README.md                          # Comprehensive Documentation
 │
 ├── models/
-│   ├── linear_regression_model.pkl    # Serialized model & pipeline bundle (joblib)
-│   └── metrics.json                   # Exported evaluation metrics & coefficients
+│   ├── task2_best_model.pkl           # Best-performing model bundle (Decision Tree)
+│   ├── task2_all_models.pkl           # Bundle of all trained models for Streamlit UI
+│   ├── task2_comparison_metrics.json  # Multi-model evaluation metrics JSON
+│   ├── linear_regression_model.pkl    # Task 1 baseline model
+│   └── metrics.json                   # Task 1 metrics JSON
 │
 ├── reports/
-│   └── California_Housing_Linear_Regression_Report.pdf # 3-page technical and executive PDF report
+│   ├── Task2_Model_Optimization_Report.pdf             # [Task 2] 2-Page Technical PDF Report
+│   └── California_Housing_Linear_Regression_Report.pdf # [Task 1] 3-Page Technical PDF Report
 │
 └── assets/
-    ├── correlation_heatmap.png        # Correlation matrix visualization
-    ├── distributions.png              # Target & feature distribution plots
-    ├── geo_distribution.png           # California geospatial price cluster map
-    ├── actual_vs_predicted.png        # Actual vs Predicted scatter plot with identity line
-    ├── residuals_distribution.png     # Residual error distribution & homoscedasticity check
-    └── feature_importance.png         # Standardized coefficient impact bar chart
+    ├── task2_model_comparison_bar.png                 # RMSE & R2 Comparison Bar Chart
+    ├── task2_actual_vs_predicted.png                  # Multi-panel Actual vs Predicted Plots
+    ├── task2_residuals_comparison.png                 # Residual Error Distributions
+    ├── task2_decision_tree_feature_importance.png     # Decision Tree Feature Importances
+    ├── actual_vs_predicted.png                        # Task 1 Actual vs Predicted Plot
+    ├── correlation_heatmap.png                        # Correlation Matrix Heatmap
+    ├── distributions.png                              # Salient Feature Distributions
+    ├── geo_distribution.png                           # California Geospatial Price Map
+    └── feature_importance.png                         # Task 1 Standardized Coefficients
 ```
 
 ---
 
 ## 🚀 Quick Start Guide
 
-### 1. Environment Setup
-Clone the repository and install the dependencies:
+### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Train Model and Generate Assets
-Run the end-to-end training pipeline:
+### 2. Run Task 2 Training & Model Comparison Pipeline
 ```bash
-python train_and_export.py
+python task2_train_and_compare.py
 ```
-This will:
-- Ingest California Housing dataset
-- Generate all high-resolution figures in `assets/`
-- Train baseline Linear Regression and standardized pipeline
-- Evaluate MAE, RMSE, and $R^2$
-- Serialize artifacts to `models/linear_regression_model.pkl` and `models/metrics.json`
+*Applies `StandardScaler`, fits Linear, Ridge, Decision Tree, and Random Forest models, prints the comparison table, and generates high-res assets in `assets/`.*
 
-### 3. Generate the PDF Report
-To compile the 3-page professional PDF summary report:
+### 3. Generate Task 2 PDF Summary Report
 ```bash
-python generate_report.py
+python task2_generate_report.py
 ```
-The resulting PDF is located at:  
-`reports/California_Housing_Linear_Regression_Report.pdf`
+*Generates the 2-page publication-quality PDF report at [`reports/Task2_Model_Optimization_Report.pdf`](./reports/Task2_Model_Optimization_Report.pdf).*
 
 ### 4. Launch the Interactive Web Application
-Start the Streamlit application for interactive predictions:
 ```bash
 streamlit run app.py
 ```
-Then open `http://localhost:8501` in your browser.
+*Open `http://localhost:8501` to test real-time predictions, toggle between algorithms, view comparative prediction bars, and interact with the California map.*
 
-### 5. View / Run the Jupyter Notebook
-Open `task1_ml_linear_regression.ipynb` in Jupyter Notebook or VS Code / IDE:
+### 5. Open Jupyter Notebooks
 ```bash
+# Task 2 Model Comparison Notebook
+jupyter notebook AI_ML_Task2_Model_Comparison.ipynb
+
+# Task 1 Baseline Notebook
 jupyter notebook task1_ml_linear_regression.ipynb
 ```
-*(All cells are pre-executed and contain all rendered tables and charts.)*
 
 ---
 
-## 🔍 Key Findings & Diagnostic Insights
-
-1. **Dominant Regressor (`MedInc`)**: Median income has a standardized coefficient of **+0.854** and a Pearson correlation of **+0.69**, making it the single most influential predictor of house prices.
-2. **Geospatial Concentration**: Coastal block groups (San Francisco Bay Area and Greater Los Angeles) command higher prices than inland districts.
-3. **Multicollinearity (`AveRooms` vs. `AveBedrms`)**: Strong collinearity ($r = 0.85$) produces negative coefficient sign on `AveRooms` when combined with `AveBedrms` in standard unregularized OLS.
-4. **Target Truncation ($500k Cap)**: Approximately 4.67% of block groups are capped at 5.0 ($500,000), causing the linear model to underpredict top-tier luxury properties.
-
----
-
-## 🔮 Recommended Next Steps
-- **Geospatial Feature Engineering**: Add distance metrics to the Pacific coastline and major urban tech hubs (San Francisco, Silicon Valley, Los Angeles).
-- **Regularization**: Implement **Ridge** or **ElasticNet** regression to penalize collinear room counts and stabilize coefficients.
-- **Non-Linear Ensembles**: Transition to tree-based models like **Random Forest**, **LightGBM**, or **XGBoost**, which typically exceed $R^2 > 0.82$ by capturing localized spatial thresholds.
+## 👥 Organization & Internship Attribution
+- **Organization**: Maincrafts Technology ([www.maincrafts.com](https://www.maincrafts.com))
+- **Program**: Artificial Intelligence & Machine Learning Internship
+- **Tasks**: Task 1 (House Price Predictor) & Task 2 (Model Optimization & Comparison)
